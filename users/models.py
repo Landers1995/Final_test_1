@@ -7,6 +7,7 @@ NULLABLE = {"blank": True, "null": True}
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True, verbose_name="E-mail")
+    is_active = models.BooleanField(default=False, verbose_name='Активность пользователя')
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

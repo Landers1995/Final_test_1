@@ -1,6 +1,5 @@
 from django.db import models
 
-
 NULLABLE = {"blank": True, "null": True}
 
 
@@ -14,6 +13,8 @@ class Factory(models.Model):
     product_name = models.CharField(max_length=150, verbose_name='Продукт', help_text='Назавание продукта завода', **NULLABLE)
     product_model = models.CharField(max_length=150, verbose_name='Модель продукта', help_text='Модель продукта завода', **NULLABLE)
     product_date = models.DateField(max_length=50, verbose_name='Дата выхода продукта', help_text='Дата выхода продукта завода', **NULLABLE)
+    provider_factory = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Поставщик", **NULLABLE)
+    provider_dept = models.DecimalField(max_digits=20, decimal_places=2, verbose_name='Задолженность', help_text='Задолженность перед поставщиком', **NULLABLE)
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания записи о заводе')
 
     class Meta:
@@ -21,7 +22,7 @@ class Factory(models.Model):
         verbose_name_plural = 'Заводы'
 
     def __str__(self):
-        self.name
+        return self.name
 
 
 class RetailChain(models.Model):
@@ -34,8 +35,9 @@ class RetailChain(models.Model):
     product_name = models.CharField(max_length=150, verbose_name='Продукт', help_text='Назавание продукта розничной сети', **NULLABLE)
     product_model = models.CharField(max_length=150, verbose_name='Модель продукта', help_text='Модель продукта розничной сети', **NULLABLE)
     product_date = models.DateField(max_length=50, verbose_name='Дата выхода продукта', help_text='Дата выхода продукта розничной сети', **NULLABLE)
-    provider_factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="Завод-поставщик", **NULLABLE)
-    provider_dept = models.DecimalField(max_digits=20, decimal_places=2, **NULLABLE)
+    provider_factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="Поставщик-завод", **NULLABLE)
+    provider_retail_chain = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Поставщик-розница", **NULLABLE)
+    provider_dept = models.DecimalField(max_digits=20, decimal_places=2, verbose_name='Задолженность', help_text='Задолженность перед поставщиком', **NULLABLE)
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания записи о розничной сети')
 
     class Meta:
@@ -43,7 +45,7 @@ class RetailChain(models.Model):
         verbose_name_plural = 'Розничные сети'
 
     def __str__(self):
-        self.name
+        return self.name
 
 
 class Entrepreneur(models.Model):
@@ -56,9 +58,10 @@ class Entrepreneur(models.Model):
     product_name = models.CharField(max_length=150, verbose_name='Продукт', help_text='Назавание продукта индивидуального предпринимателя', **NULLABLE)
     product_model = models.CharField(max_length=150, verbose_name='Модель продукта', help_text='Модель продукта индивидуального предпринимателя', **NULLABLE)
     product_date = models.DateField(max_length=50, verbose_name='Дата выхода продукта', help_text='Дата выхода продукта индивидуального предпринимателя', **NULLABLE)
-    provider_factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="Завод-поставщик", **NULLABLE)
-    provider_retail_chain = models.ForeignKey(RetailChain, on_delete=models.CASCADE, verbose_name="Розничная сеть-поставщик", **NULLABLE)
-    provider_dept = models.DecimalField(max_digits=20, decimal_places=2, **NULLABLE)
+    provider_factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="Поставщик-завод", **NULLABLE)
+    provider_retail_chain = models.ForeignKey(RetailChain, on_delete=models.CASCADE, verbose_name="Поставщик-розница", **NULLABLE)
+    provider_entrepreneur = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Поставщик ИП", **NULLABLE)
+    provider_dept = models.DecimalField(max_digits=20, decimal_places=2, verbose_name='Задолженность', help_text='Задолженность перед поставщиком', **NULLABLE)
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания записи об индивидуальном предпринимателе')
 
     class Meta:
@@ -66,4 +69,4 @@ class Entrepreneur(models.Model):
         verbose_name_plural = 'Индивидуальные предприниматели'
 
     def __str__(self):
-        self.name
+        return self.name
