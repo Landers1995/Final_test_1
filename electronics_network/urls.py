@@ -21,9 +21,9 @@ urlpatterns = [
     path('retail/update/<int:pk>/', RetailChainUpdateAPIView.as_view(), name='retail-update'),
     path('retail/delete/<int:pk>/', RetailChainDestroyAPIView.as_view(), name='retail-destroy'),
 
-    path('ep/create/', EntrepreneurCreateAPIView.as_view(), name='ep-create'),
-    path('ep/', EntrepreneurListAPIView.as_view(), name='ep-list'),
-    path('ep/<int:pk>/', EntrepreneurRetrieveAPIView.as_view(), name='ep-retrieve'),
-    path('ep/update/<int:pk>/', EntrepreneurUpdateAPIView.as_view(), name='ep-update'),
-    path('ep/delete/<int:pk>/', EntrepreneurDestroyAPIView.as_view(), name='ep-destroy'),
+    path('ep/create/', EntrepreneurCreateAPIView.as_view(), name='entrepreneur-create'),
+    path('ep/', EntrepreneurListAPIView.as_view(), name='entrepreneur-list'),
+    path('ep/<int:pk>/', EntrepreneurRetrieveAPIView.as_view(), name='entrepreneur-retrieve'),
+    path('ep/update/<int:pk>/', EntrepreneurUpdateAPIView.as_view(), name='entrepreneur-update'),
+    path('ep/delete/<int:pk>/', EntrepreneurDestroyAPIView.as_view(), name='entrepreneur-destroy'),
 ]

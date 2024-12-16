@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 
+from electronics_network.paginations import ElectronicNetworksPaginator
 from electronics_network.permissions import IsActive
 from electronics_network.serializer import FactorySerializer, RetailChainSerializer, EntrepreneurSerializer
 from electronics_network.models import Factory, RetailChain, Entrepreneur
@@ -18,6 +19,7 @@ class FactoryListAPIView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('country',)
     permission_classes = [IsActive]
+    pagination_class = ElectronicNetworksPaginator
 
 
 class FactoryRetrieveAPIView(generics.RetrieveAPIView):
@@ -49,6 +51,7 @@ class RetailChainListAPIView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('country',)
     permission_classes = [IsActive]
+    pagination_class = ElectronicNetworksPaginator
 
 
 class RetailChainRetrieveAPIView(generics.RetrieveAPIView):
@@ -80,6 +83,7 @@ class EntrepreneurListAPIView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ('country',)
     permission_classes = [IsActive]
+    pagination_class = ElectronicNetworksPaginator
 
 
 class EntrepreneurRetrieveAPIView(generics.RetrieveAPIView):

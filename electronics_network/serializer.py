@@ -3,6 +3,7 @@ from electronics_network.models import Factory, RetailChain, Entrepreneur
 
 
 class UpdateProviderDeptMixin:
+    """Данный метод не позводяет менять поле provider_dept с помощью API интерфейса """
     def update(self, instance, validated_data):
         validated_data.pop('provider_dept', None)
         return super().update(instance, validated_data)

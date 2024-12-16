@@ -14,7 +14,7 @@ class Factory(models.Model):
     product_model = models.CharField(max_length=150, verbose_name='Модель продукта', help_text='Модель продукта завода', **NULLABLE)
     product_date = models.DateField(max_length=50, verbose_name='Дата выхода продукта', help_text='Дата выхода продукта завода', **NULLABLE)
     provider_factory = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Поставщик", **NULLABLE)
-    provider_dept = models.DecimalField(max_digits=20, decimal_places=2, verbose_name='Задолженность', help_text='Задолженность перед поставщиком', **NULLABLE)
+    provider_dept = models.DecimalField(default=None, max_digits=20, decimal_places=2, verbose_name='Задолженность', help_text='Задолженность перед поставщиком', **NULLABLE)
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания записи о заводе')
 
     class Meta:
@@ -37,7 +37,7 @@ class RetailChain(models.Model):
     product_date = models.DateField(max_length=50, verbose_name='Дата выхода продукта', help_text='Дата выхода продукта розничной сети', **NULLABLE)
     provider_factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="Поставщик-завод", **NULLABLE)
     provider_retail_chain = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Поставщик-розница", **NULLABLE)
-    provider_dept = models.DecimalField(max_digits=20, decimal_places=2, verbose_name='Задолженность', help_text='Задолженность перед поставщиком', **NULLABLE)
+    provider_dept = models.DecimalField(default=None, max_digits=20, decimal_places=2, verbose_name='Задолженность', help_text='Задолженность перед поставщиком', **NULLABLE)
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания записи о розничной сети')
 
     class Meta:
@@ -61,7 +61,7 @@ class Entrepreneur(models.Model):
     provider_factory = models.ForeignKey(Factory, on_delete=models.CASCADE, verbose_name="Поставщик-завод", **NULLABLE)
     provider_retail_chain = models.ForeignKey(RetailChain, on_delete=models.CASCADE, verbose_name="Поставщик-розница", **NULLABLE)
     provider_entrepreneur = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Поставщик ИП", **NULLABLE)
-    provider_dept = models.DecimalField(max_digits=20, decimal_places=2, verbose_name='Задолженность', help_text='Задолженность перед поставщиком', **NULLABLE)
+    provider_dept = models.DecimalField(default=None, max_digits=20, decimal_places=2, verbose_name='Задолженность', help_text='Задолженность перед поставщиком', **NULLABLE)
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания записи об индивидуальном предпринимателе')
 
     class Meta:
