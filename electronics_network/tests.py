@@ -127,6 +127,29 @@ class ElectronicsNetworkCase(APITestCase):
             RetailChain.objects.all().count(), 2
         )
 
+    def test_entrepreneur_create(self):
+        url = reverse('electronics_network:entrepreneur-create')
+        data = {
+            'name': "ИП2",
+            'email': "entrepreneur2@mail.ru",
+            'country': "Россия",
+            'city': "Тула",
+            'street': "Красная",
+            'house_number': "51",
+            'product_name': "Станок",
+            'product_model': 1,
+            'product_date': "2024-12-13",
+            'provider_dept': 20000.00
+        }
+        responce = self.client.post(url, data)
+
+        self.assertEqual(
+            responce.status_code, status.HTTP_201_CREATED
+        )
+        self.assertEqual(
+            Entrepreneur.objects.all().count(), 2
+        )
+
     def test_factory_update(self):
         url = reverse('electronics_network:factory-update', args=(self.factory.pk,))
         data = {
@@ -142,6 +165,36 @@ class ElectronicsNetworkCase(APITestCase):
             data.get('name', 'email'), 'Завод3', 'zavod3@mail.ru'
         )
 
+    def test_retail_chain_update(self):
+        url = reverse('electronics_network:retail-update', args=(self.retail_chain.pk,))
+        data = {
+            'name': "Сеть3",
+            'email': "retail3@mail.ru"
+        }
+        responce = self.client.patch(url, data)
+        data = responce.json()
+        self.assertEqual(
+            responce.status_code, status.HTTP_200_OK
+        )
+        self.assertEqual(
+            data.get('name', 'email'), 'Сеть3', 'retail3@mail.ru'
+        )
+
+    def test_entrepreneur_update(self):
+        url = reverse('electronics_network:entrepreneur-update', args=(self.entrepreneur.pk,))
+        data = {
+            'name': "ИП3",
+            'email': "entrepreneur3@mail.ru"
+        }
+        responce = self.client.patch(url, data)
+        data = responce.json()
+        self.assertEqual(
+            responce.status_code, status.HTTP_200_OK
+        )
+        self.assertEqual(
+            data.get('name', 'email'), 'ИП3', 'entrepreneur3@mail.ru'
+        )
+
     def test_factory_delete(self):
         url = reverse('electronics_network:factory-destroy', args=(self.factory.pk,))
 
@@ -151,6 +204,28 @@ class ElectronicsNetworkCase(APITestCase):
         )
         self.assertEqual(
             Factory.objects.all().count(), 0
+        )
+
+    def test_retail_chain_delete(self):
+        url = reverse('electronics_network:retail-destroy', args=(self.retail_chain.pk,))
+
+        responce = self.client.delete(url)
+        self.assertEqual(
+            responce.status_code, status.HTTP_204_NO_CONTENT
+        )
+        self.assertEqual(
+            RetailChain.objects.all().count(), 0
+        )
+
+    def test_entrepreneur_delete(self):
+        url = reverse('electronics_network:entrepreneur-destroy', args=(self.entrepreneur.pk,))
+
+        responce = self.client.delete(url)
+        self.assertEqual(
+            responce.status_code, status.HTTP_204_NO_CONTENT
+        )
+        self.assertEqual(
+            Entrepreneur.objects.all().count(), 0
         )
 
     def test_factory_list(self):
